@@ -1,2 +1,0 @@
-# sattahip-trip
-sattahip-trip
