@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌊 สัตหีบ Squad Trip — 14 คน 2D1N</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ocean: #0B2D4E;
+    --ocean-mid: #164E6F;
+    --teal: #14B8A6;
+    --teal-light: #5EEAD4;
+    --sand: #F5F0E8;
+    --sand-dark: #E8DFD0;
+    --coral: #FF6B5B;
+    --coral-dark: #E5533F;
+    --white: #FFFFFF;
+    --text-dark: #0B2D4E;
+    --text-mid: #4A6A80;
+    --text-light: #8BA5B8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', 'Kanit', sans-serif;
+    background: var(--sand);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(160deg, #041C2E 0%, #0B2D4E 45%, #0F4A6E 80%, #1A6B72 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=1800&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Kanit', sans-serif;
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title span {
+    color: var(--teal);
+    display: block;
+  }
+
+  .hero-sub {
+    font-family: 'Kanit', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 400;
+    backdrop-filter: blur(4px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--teal);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.55);
+    margin-top: 2px;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 300;
+  }
+
+  .wave-bottom {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.4s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scrollLine 1.5s ease-in-out infinite;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 5rem 1.5rem;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Kanit', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: var(--ocean);
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ─── TIMELINE ─── */
+  .timeline-section {
+    background: var(--white);
+  }
+
+  .timeline-header {
+    margin-bottom: 3rem;
+  }
+
+  .day-block {
+    margin-bottom: 3.5rem;
+  }
+
+  .day-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--ocean);
+    color: var(--white);
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.75rem;
+  }
+
+  .tl {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .tl::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--teal), var(--sand));
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--teal);
+    flex-shrink: 0;
+  }
+
+  .tl-dot.accent { background: var(--teal); }
+  .tl-dot.coral { background: var(--coral); border-color: var(--coral); }
+
+  .tl-card {
+    flex: 1;
+    background: var(--sand);
+    border-radius: 16px;
+    padding: 1.1rem 1.25rem;
+    border-left: 3px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tl-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(11,45,78,0.08);
+  }
+
+  .tl-card.ocean-border { border-left-color: var(--teal); }
+  .tl-card.coral-border { border-left-color: var(--coral); }
+
+  .tl-time {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 3px;
+  }
+
+  .tl-title {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ocean);
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: 0.875rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .tl-tag {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.72rem;
+    padding: 2px 10px;
+    border-radius: 100px;
+    font-family: 'Kanit', sans-serif;
+  }
+
+  .tag-sea { background: #CCFBF1; color: #0F766E; }
+  .tag-food { background: #FEF3C7; color: #B45309; }
+  .tag-action { background: #FFEDD5; color: #C2410C; }
+  .tag-rest { background: #EDE9FE; color: #6D28D9; }
+  .tag-drive { background: #F1F5F9; color: #475569; }
+
+  /* ─── ACTIVITY CARDS ─── */
+  .activities-section {
+    background: var(--sand);
+  }
+
+  .act-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .act-card {
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 2px 12px rgba(11,45,78,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .act-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(11,45,78,0.12);
+  }
+
+  .act-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .act-body {
+    padding: 1.25rem;
+  }
+
+  .act-type {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .act-name {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ocean);
+    margin-bottom: 6px;
+  }
+
+  .act-desc {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .act-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .act-rating {
+    font-size: 0.8rem;
+    color: #F59E0B;
+    font-weight: 600;
+  }
+
+  .act-price {
+    font-size: 0.8rem;
+    color: var(--ocean);
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    background: var(--sand);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ─── BUDGET ─── */
+  .budget-section {
+    background: var(--ocean);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .budget-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(20,184,166,0.07);
+  }
+
+  .budget-section .section-title { color: var(--white); }
+  .budget-section .section-label { color: var(--teal-light); }
+  .budget-section .section-desc { color: rgba(255,255,255,0.6); }
+
+  .budget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .budget-grid { grid-template-columns: 1fr; }
+  }
+
+  .budget-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .budget-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+  }
+
+  .budget-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 3px;
+    font-family: 'Kanit', sans-serif;
+  }
+
+  .budget-amount {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--teal-light);
+  }
+
+  .budget-total-box {
+    grid-column: 1 / -1;
+    background: var(--teal);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .budget-total-label {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .budget-total-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  /* ─── TIPS ─── */
+  .tips-section {
+    background: var(--sand);
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .tip-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border-top: 3px solid var(--teal);
+  }
+
+  .tip-emoji {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .tip-title {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ocean);
+    margin-bottom: 6px;
+  }
+
+  .tip-desc {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  /* ─── MAP SECTION ─── */
+  .places-section {
+    background: var(--white);
+  }
+
+  .places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .place-card {
+    border: 1px solid var(--sand-dark);
+    border-radius: 14px;
+    padding: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .place-card:hover {
+    border-color: var(--teal);
+    box-shadow: 0 4px 16px rgba(20,184,166,0.1);
+  }
+
+  .place-cat {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 4px;
+  }
+
+  .place-name {
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ocean);
+    margin-bottom: 4px;
+  }
+
+  .place-stars { font-size: 0.8rem; color: #F59E0B; margin-bottom: 6px; }
+
+  .place-info {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ocean);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    font-family: 'Kanit', sans-serif;
+  }
+
+  footer strong { color: var(--teal); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(11,45,78,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(20,184,166,0.15);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateY(-100%);
+    transition: transform 0.4s ease;
+  }
+
+  nav.visible { transform: translateY(0); }
+
+  .nav-logo {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    color: var(--white);
+    font-size: 1rem;
+  }
+
+  .nav-logo span { color: var(--teal); }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: 'Kanit', sans-serif;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--teal); }
+
+  @media (max-width: 500px) {
+    .nav-links { display: none; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── PHOTO STRIP ─── */
+  .photo-strip {
+    display: flex;
+    gap: 0;
+    height: 280px;
+    overflow: hidden;
+  }
+
+  .photo-strip img {
+    flex: 1;
+    object-fit: cover;
+    filter: brightness(0.85) saturate(1.1);
+    transition: flex 0.5s ease, filter 0.3s ease;
+  }
+
+  .photo-strip img:hover {
+    flex: 2.5;
+    filter: brightness(1) saturate(1.2);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero-title { font-size: 3.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .budget-grid { grid-template-columns: 1fr; }
+    .photo-strip { height: 180px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">🌊 <span>สัตหีบ</span> Squad Trip</div>
+  <ul class="nav-links">
+    <li><a href="#schedule">ตาราง</a></li>
+    <li><a href="#activities">กิจกรรม</a></li>
+    <li><a href="#budget">งบ</a></li>
+    <li><a href="#tips">เคล็ดลับ</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Squad Trip · เสาร์–อาทิตย์ · ชลบุรี</p>
+
+    <h1 class="hero-title">
+      สัตหีบ
+      <span>2D · 1N</span>
+    </h1>
+
+    <p class="hero-sub">ดำน้ำแสมสาร · ยิงเพ้นบอล · กินซีฟู้ดสด · นอนรีสอร์ทวิวทะเล</p>
+
+    <div class="hero-pills">
+      <span class="pill">🤿 ดำน้ำเกาะแสมสาร</span>
+      <span class="pill">🎯 Paintball</span>
+      <span class="pill">🦞 ซีฟู้ดสด</span>
+      <span class="pill">🌊 หาด Nam Sai</span>
+      <span class="pill">📸 ถ่ายรูปใต้น้ำฟรี</span>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">14</div>
+        <div class="hero-stat-label">คน</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">2</div>
+        <div class="hero-stat-label">วัน 1 คืน</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">~4,500฿</div>
+        <div class="hero-stat-label">ต่อคน (รวมทุกอย่าง)</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">~3.5</div>
+        <div class="hero-stat-label">ชม. จากกรุงเทพฯ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>เลื่อนดูแผน</span>
+    <div class="scroll-line"></div>
+  </div>
+
+  <svg class="wave-bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C360,80 720,0 1080,50 C1260,70 1380,30 1440,40 L1440,80 L0,80 Z" fill="#FFFFFF"/>
+  </svg>
+</section>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip" aria-hidden="true">
+  <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=75" alt="ดำน้ำ">
+  <img src="https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?w=600&q=75" alt="ทะเลใส">
+  <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=75" alt="เกาะ">
+  <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=75" alt="แคมป์เพ้นบอล">
+  <img src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=600&q=75" alt="ซีฟู้ด">
+</div>
+
+<!-- SCHEDULE -->
+<section id="schedule" class="timeline-section">
+  <div class="container">
+    <div class="timeline-header reveal">
+      <p class="section-label">ตารางเวลา</p>
+      <h2 class="section-title">แผนทริป 2 วัน 1 คืน</h2>
+      <p class="section-desc">ออกแบบมาเพื่อ 14 คน — เต็มอิ่มทุกชั่วโมง ไม่มีเวลาว่างไม่รู้จะทำอะไร</p>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="day-block reveal">
+      <div class="day-badge">📅 วันเสาร์ — วันที่ 1</div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-time">05:30 น.</div>
+            <div class="tl-title">🚗 ออกเดินทางจากกรุงเทพฯ</div>
+            <div class="tl-desc">นัดรวมกันแต่เช้า จัดรถ 3-4 คัน หรือเช่ารถตู้ 2 คัน มุ่งหน้า ต.แสมสาร อ.สัตหีบ ชลบุรี ออกก่อนรถติด</div>
+            <span class="tl-tag tag-drive">เดินทาง ~3.5 ชม.</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot accent"></div>
+          <div class="tl-card ocean-border">
+            <div class="tl-time">09:00 น.</div>
+            <div class="tl-title">🏨 เช็คอิน Warasin Resort</div>
+            <div class="tl-desc">วางของ เปลี่ยนชุดว่ายน้ำ เตรียมพร้อมก่อนออกทริปดำน้ำ รีสอร์ทอยู่ห่างจากท่าเรือแสมสารแค่ 5 นาที</div>
+            <span class="tl-tag tag-rest">พักผ่อน 30 นาที</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot accent"></div>
+          <div class="tl-card ocean-border">
+            <div class="tl-time">10:00 – 13:30 น.</div>
+            <div class="tl-title">🤿 ดำน้ำ / สนอร์คเกิล เกาะแสมสาร</div>
+            <div class="tl-desc">ออกเรือกับ Captain Nui (⭐5.0 · 563 รีวิว) — เที่ยวเกาะแสมสาร น้ำใสแจ๋ว ปะการัง ปลาสวยงาม ช่างภาพใต้น้ำถ่ายรูปให้ฟรีทั้งทริป!</div>
+            <span class="tl-tag tag-sea">~750-1,000฿/คน · เรือส่วนตัว 14 คน</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-time">14:00 น.</div>
+            <div class="tl-title">🦞 อาหารกลางวัน — ซีฟู้ดสดริมทะเล</div>
+            <div class="tl-desc">Samaesarn Kitchen (⭐4.5 · 2,346 รีวิว) — วิวทะเล 2 ชั้น ปลาทะเลสด กุ้งแม่น้ำ หอยแมลงภู่ สั่งแบบ family style 14 คนพร้อมกัน</div>
+            <span class="tl-tag tag-food">~200-300฿/คน</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot coral"></div>
+          <div class="tl-card coral-border">
+            <div class="tl-time">16:00 – 18:30 น.</div>
+            <div class="tl-title">🎯 ยิงเพ้นบอล — Pattaya Paintball Park</div>
+            <div class="tl-desc">ระยะทาง ~40 นาทีจากแสมสาร ⭐4.9 (265 รีวิว) มีหลายสนาม แบ่งทีมสู้กัน 14 คนพอดีสองทีม! โทรจองล่วงหน้าก่อนไป</div>
+            <span class="tl-tag tag-action">~600-1,000฿/คน · 100 ลูก/คน</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-time">19:00 น.</div>
+            <div class="tl-title">🌅 อาหารเย็น + นั่งชิลริมทะเล</div>
+            <div class="tl-desc">De Beach House (⭐4.6 · 1,223 รีวิว) วิวทะเลยามค่ำสวยมาก กินซีฟู้ด จิบเครื่องดื่ม ฟังเสียงคลื่น ก่อนกลับที่พัก</div>
+            <span class="tl-tag tag-food">~250-350฿/คน</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-block reveal">
+      <div class="day-badge">📅 วันอาทิตย์ — วันที่ 2</div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-time">07:30 น.</div>
+            <div class="tl-title">☕ อาหารเช้าที่รีสอร์ท</div>
+            <div class="tl-desc">นั่งกินข้าวต้ม กาแฟ ชมวิวทะเลยามเช้า บรรยากาศดีมาก รีสอร์ทเสิร์ฟตามสั่ง</div>
+            <span class="tl-tag tag-rest">ชิว ผ่อนคลาย</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot accent"></div>
+          <div class="tl-card ocean-border">
+            <div class="tl-time">09:00 – 11:30 น.</div>
+            <div class="tl-title">🏖️ หาด Nam Sai + เล่นน้ำ</div>
+            <div class="tl-desc">หาดน้ำใสในพื้นที่สัตหีบ เข้าได้ฟรี น้ำใสมากติดอันดับต้นๆ ของอ่าวไทย ใครอยากดำน้ำรอบ 2 สามารถจองกับ Mantaray Travel เพิ่มได้เลย</div>
+            <span class="tl-tag tag-sea">ฟรี หรือจ่ายเพิ่มตามต้องการ</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-time">11:30 น.</div>
+            <div class="tl-title">🍽️ อาหารกลางวันสุดท้าย + เช็คเอาท์</div>
+            <div class="tl-desc">Puen Talay Restaurant (⭐4.3 · 2,793 รีวิว) — นั่งริมทะเล กินข้าวมื้อสุดท้าย เช็คเอาท์ 12:00 น. เก็บกระเป๋า</div>
+            <span class="tl-tag tag-food">~200-300฿/คน</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-time">13:00 น.</div>
+            <div class="tl-title">🚗 เดินทางกลับกรุงเทพฯ</div>
+            <div class="tl-desc">ออกก่อนรถติด ถึงกรุงเทพฯ ประมาณ 17:00-18:00 น. กลับบ้านพร้อมรูปสวยๆ ใต้น้ำและความทรงจำดีๆ</div>
+            <span class="tl-tag tag-drive">~4 ชม. รวมรถติด</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities" class="activities-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">กิจกรรมแนะนำ</p>
+      <h2 class="section-title">สถานที่ที่เลือกแล้ว</h2>
+      <p class="section-desc">คัดมาเฉพาะที่รีวิวดี เหมาะกับกลุ่มใหญ่ และรองรับ 14 คนได้สบาย</p>
+    </div>
+
+    <div class="act-grid">
+      <div class="act-card reveal reveal-delay-1">
+        <img class="act-img" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=75" alt="ดำน้ำ" loading="lazy">
+        <div class="act-body">
+          <div class="act-type">🤿 ดำน้ำ · แสมสาร</div>
+          <div class="act-name">Captain Nui</div>
+          <div class="act-desc">ทริปดำน้ำสุดฮิต ช่างภาพใต้น้ำถ่ายฟรีทั้งทริป เรือเหมาลำ ปลอดภัย ดูแลดีมาก</div>
+          <div class="act-meta">
+            <span class="act-rating">⭐ 5.0 (563 รีวิว)</span>
+            <span class="act-price">750–1,000฿/คน</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="act-card reveal reveal-delay-2">
+        <img class="act-img" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=75" alt="เกาะ" loading="lazy">
+        <div class="act-body">
+          <div class="act-type">🤿 ดำน้ำ · แสมสาร</div>
+          <div class="act-name">Mantaray Travel</div>
+          <div class="act-desc">ตัวเลือกสำรองสุดยอด ถ่ายรูปฟรี มีห้องอาบน้ำ ที่จอดรถ บริการระดับ 5 ดาว</div>
+          <div class="act-meta">
+            <span class="act-rating">⭐ 4.9 (453 รีวิว)</span>
+            <span class="act-price">750–1,000฿/คน</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="act-card reveal reveal-delay-3">
+        <img class="act-img" src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=75" alt="เพ้นบอล" loading="lazy">
+        <div class="act-body">
+          <div class="act-type">🎯 เพ้นบอล · พัทยา</div>
+          <div class="act-name">Pattaya Paintball Park</div>
+          <div class="act-desc">หลายสนาม แบ่งทีมสู้กันได้เลย 14 คน = 7 vs 7 มันส์มาก อุปกรณ์ครบ เปิด 9.00-18.00 น.</div>
+          <div class="act-meta">
+            <span class="act-rating">⭐ 4.9 (265 รีวิว)</span>
+            <span class="act-price">600–1,000฿/คน</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="act-card reveal reveal-delay-4">
+        <img class="act-img" src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=600&q=75" alt="ซีฟู้ด" loading="lazy">
+        <div class="act-body">
+          <div class="act-type">🦞 ซีฟู้ด · สัตหีบ</div>
+          <div class="act-name">De Beach House</div>
+          <div class="act-desc">วิวทะเลสวยที่สุด บรรยากาศดีมาก อาหารสด รสชาติเยี่ยม เจ้าของใจดี แนะนำมาก</div>
+          <div class="act-meta">
+            <span class="act-rating">⭐ 4.6 (1,223 รีวิว)</span>
+            <span class="act-price">~250–350฿/คน</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section id="budget" class="budget-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">งบประมาณ</p>
+      <h2 class="section-title">ค่าใช้จ่ายต่อคน</h2>
+      <p class="section-desc">ประมาณการสำหรับ 14 คน ราคาจริงอาจต่างกัน ควรโทรสอบถามก่อนไปทุกสถานที่</p>
+    </div>
+
+    <div class="budget-grid">
+      <div class="budget-item reveal reveal-delay-1">
+        <div class="budget-icon">🤿</div>
+        <div>
+          <div class="budget-label">ดำน้ำ / สนอร์คเกิล</div>
+          <div class="budget-amount">750 – 1,000 ฿</div>
+        </div>
+      </div>
+      <div class="budget-item reveal reveal-delay-2">
+        <div class="budget-icon">🎯</div>
+        <div>
+          <div class="budget-label">เพ้นบอล (100 ลูก + อุปกรณ์)</div>
+          <div class="budget-amount">600 – 1,000 ฿</div>
+        </div>
+      </div>
+      <div class="budget-item reveal reveal-delay-1">
+        <div class="budget-icon">🏨</div>
+        <div>
+          <div class="budget-label">ที่พัก (2-3 คน/ห้อง)</div>
+          <div class="budget-amount">500 – 900 ฿</div>
+        </div>
+      </div>
+      <div class="budget-item reveal reveal-delay-2">
+        <div class="budget-icon">🍽️</div>
+        <div>
+          <div class="budget-label">อาหาร 3 มื้อ + เครื่องดื่ม</div>
+          <div class="budget-amount">700 – 1,000 ฿</div>
+        </div>
+      </div>
+      <div class="budget-item reveal reveal-delay-1">
+        <div class="budget-icon">🎟️</div>
+        <div>
+          <div class="budget-label">ค่าอุทยานฯ (คนไทย)</div>
+          <div class="budget-amount">80 ฿</div>
+        </div>
+      </div>
+      <div class="budget-item reveal reveal-delay-2">
+        <div class="budget-icon">🚗</div>
+        <div>
+          <div class="budget-label">ค่าน้ำมัน / รถตู้ (หาร 14)</div>
+          <div class="budget-amount">300 – 500 ฿</div>
+        </div>
+      </div>
+      <div class="budget-total-box reveal">
+        <div class="budget-total-label">รวมทั้งหมดต่อคน (14 คน)</div>
+        <div class="budget-total-num">~2,930 – 4,480 ฿</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLACES QUICK REF -->
+<section class="places-section" id="places">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">สถานที่ทั้งหมด</p>
+      <h2 class="section-title">Quick Reference</h2>
+    </div>
+    <div class="places-grid">
+      <div class="place-card reveal reveal-delay-1">
+        <div class="place-cat">ดำน้ำ</div>
+        <div class="place-name">Captain Nui ดำน้ำแสมสาร</div>
+        <div class="place-stars">★★★★★ 5.0</div>
+        <div class="place-info">📞 096-156-5329 · เปิดตลอด 24 ชม.</div>
+      </div>
+      <div class="place-card reveal reveal-delay-2">
+        <div class="place-cat">ดำน้ำ</div>
+        <div class="place-name">Mantaray Travel</div>
+        <div class="place-stars">★★★★★ 4.9</div>
+        <div class="place-info">📞 092-242-6292 · เปิดตลอด 24 ชม.</div>
+      </div>
+      <div class="place-card reveal reveal-delay-3">
+        <div class="place-cat">ดำน้ำ</div>
+        <div class="place-name">A. Trithip Diving (คุณโอ๋)</div>
+        <div class="place-stars">★★★★★ 4.9</div>
+        <div class="place-info">📞 086-156-1991 · 750฿/คน รวมเรือ</div>
+      </div>
+      <div class="place-card reveal reveal-delay-1">
+        <div class="place-cat">เพ้นบอล</div>
+        <div class="place-name">Pattaya Paintball Park</div>
+        <div class="place-stars">★★★★★ 4.9</div>
+        <div class="place-info">📞 02-114-3695 · 09.00-18.00 น. โทรจองก่อน!</div>
+      </div>
+      <div class="place-card reveal reveal-delay-2">
+        <div class="place-cat">ที่พัก</div>
+        <div class="place-name">Warasin Resort</div>
+        <div class="place-stars">★★★★☆ 4.5</div>
+        <div class="place-info">📞 081-762-7620 · แสมสาร ใกล้ท่าเรือ</div>
+      </div>
+      <div class="place-card reveal reveal-delay-3">
+        <div class="place-cat">ที่พัก</div>
+        <div class="place-name">Seattle Samaesarn Resort</div>
+        <div class="place-stars">★★★★☆ 4.4</div>
+        <div class="place-info">📞 063-441-6642 · Hidden gem · รวมเช้า</div>
+      </div>
+      <div class="place-card reveal reveal-delay-1">
+        <div class="place-cat">ร้านอาหาร</div>
+        <div class="place-name">Samaesarn Kitchen Seafood</div>
+        <div class="place-stars">★★★★☆ 4.5</div>
+        <div class="place-info">📞 094-146-4619 · 09.30-22.00 น.</div>
+      </div>
+      <div class="place-card reveal reveal-delay-2">
+        <div class="place-cat">ร้านอาหาร</div>
+        <div class="place-name">De Beach House</div>
+        <div class="place-stars">★★★★☆ 4.6</div>
+        <div class="place-info">📞 096-293-5563 · 08.00-20.00 น.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="tips" class="tips-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">เคล็ดลับ</p>
+      <h2 class="section-title">ก่อนไปต้องรู้</h2>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card reveal reveal-delay-1">
+        <span class="tip-emoji">📅</span>
+        <div class="tip-title">จองล่วงหน้า 2-3 สัปดาห์</div>
+        <div class="tip-desc">กรุ๊ป 14 คน ต้องจองทริปดำน้ำและเพ้นบอลล่วงหน้า โดยเฉพาะวันหยุดสุดสัปดาห์ อาจเต็มได้ง่ายมาก</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <span class="tip-emoji">🤿</span>
+        <div class="tip-title">เคล็ดลับดำน้ำ</div>
+        <div class="tip-desc">ใส่ชุดว่ายน้ำมาจากที่พัก ทาครีมกันแดดแบบ reef-safe ก่อนลงน้ำ 30 นาที อย่าเพิ่งกินอิ่มก่อนลงเรือ</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-3">
+        <span class="tip-emoji">🎯</span>
+        <div class="tip-title">เคล็ดลับเพ้นบอล</div>
+        <div class="tip-desc">ใส่เสื้อผ้าหนาที่ไม่เสียดาย ใส่ถุงเท้าหนาช่วยได้ อย่าถอดหมวกเด็ดขาด แบ่งทีม 7 vs 7 ลงตัวสำหรับ 14 คน</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-1">
+        <span class="tip-emoji">🚗</span>
+        <div class="tip-title">การเดินทาง</div>
+        <div class="tip-desc">14 คน แนะนำเช่ารถตู้ 2 คัน ออกเดินทาง 05:00-06:00 น. หลีกเลี่ยงรถติดทางออกกรุงเทพฯ ประหยัดเวลาได้มาก</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-2">
+        <span class="tip-emoji">📸</span>
+        <div class="tip-title">ถ่ายรูปใต้น้ำฟรี</div>
+        <div class="tip-desc">Captain Nui และ Mantaray Travel มีช่างภาพใต้น้ำมืออาชีพฟรี ไม่ต้องพกกล้องกันน้ำเอง รูปออกมาสวยมาก</div>
+      </div>
+      <div class="tip-card reveal reveal-delay-3">
+        <span class="tip-emoji">💰</span>
+        <div class="tip-title">ประหยัดงบได้อีก</div>
+        <div class="tip-desc">เหมาเรือทั้งลำ 14 คน ต่อรองได้ดีกว่าแบบกรุ๊ป เพ้นบอลถามโปรโมชั่นกลุ่มก่อนไป พักแบบ 3 คน/ห้อง ลดค่าห้องได้มาก</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>🌊 <strong>สัตหีบ Squad Trip 2D1N</strong> · 14 คน · ส–อา</p>
+  <p style="margin-top: 6px; font-size: 0.72rem;">จัดทำโดย Claude · ข้อมูลสถานที่จาก Google Maps · ราคาเป็นการประมาณการ กรุณาสอบถามก่อนไปเสมอ</p>
+</footer>
+
+<script>
+  // NAV show on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) nav.classList.add('visible');
+    else nav.classList.remove('visible');
+  }, { passive: true });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
